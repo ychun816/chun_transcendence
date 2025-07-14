@@ -65,33 +65,33 @@ FROM CHUN NOTES
 ### CheckList
 
 ### 🔐 Cybersecurity
-☐ Install ModSecurity + OWASP CRS
-☐ Test SQLi/XSS payloads
-☐ Setup Vault server (KV)
-☐ Store API keys in Vault
-☐ JWT token creation + middleware
-☐ 2FA (Google Authenticator)
-☐ Secure .env + HTTPS setup
+☐ Install ModSecurity + OWASP CRS <br/>
+☐ Test SQLi/XSS payloads<br/>
+☐ Setup Vault server (KV)<br/>
+☐ Store API keys in Vault<br/>
+☐ JWT token creation + middleware<br/>
+☐ 2FA (Google Authenticator)<br/>
+☐ Secure .env + HTTPS setup<br/>
 
 ### 🛠 DevOps Monitoring
-☐ Install Prometheus
-☐ Add Node Exporter
-☐ Add custom metrics (backend)
-☐ Install Grafana + create dashboards
-☐ Setup alerting rules
+☐ Install Prometheus<br/>
+☐ Add Node Exporter<br/>
+☐ Add custom metrics (backend)<br/>
+☐ Install Grafana + create dashboards<br/>
+☐ Setup alerting rules<br/>
 
 ### 🧱 Microservices Design
-☐ Split Auth/User/Game as services
-☐ Dockerize each service
-☐ Use JWT for inter-service API
-☐ Use docker-compose to orchestrate
-☐ Write README & API docs
+☐ Split Auth/User/Game as services<br/>
+☐ Dockerize each service<br/>
+☐ Use JWT for inter-service API<br/>
+☐ Use docker-compose to orchestrate<br/>
+☐ Write README & API docs<br/>
 
 ### ✅ Final Integration
-☐ Vault + JWT integration test
-☐ WAF + login route test
-☐ Prometheus + dashboard validation
-☐ End-to-end flow test
+☐ Vault + JWT integration test<br/>
+☐ WAF + login route test<br/>
+☐ Prometheus + dashboard validation<br/>
+☐ End-to-end flow test<br/>
 
 
 ###  Schedule 
