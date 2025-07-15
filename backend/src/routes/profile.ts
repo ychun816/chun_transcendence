@@ -8,6 +8,7 @@ import bcrypt from "bcrypt";
 import { PROJECT_ROOT } from "../server.js";
 import { createHash } from "crypto";
 import jwt from "jsonwebtoken";
+import { request } from "http";
 
 const secretKey = process.env.COOKIE_SECRET;
 
@@ -24,7 +25,7 @@ function extractTokenFromRequest(request: FastifyRequest): { userId: number; use
 	if (!authHeader || !authHeader.startsWith('Bearer ')) {
 		return null;
 	}
-	
+
 	const token = authHeader.substring(7);
 	try {
 		const decoded = jwt.verify(token, secretKey || 'fallback-secret-key') as any;
@@ -49,7 +50,7 @@ export async function registerProfileRoute(
 			if (!auth) {
 				return reply.status(401).send({ error: 'Unauthorized' });
 			}
-			
+
 			const username = request.query.username as string;
 			if (!username) {
 				reply.status(400).send({ error: "Username is required" });
@@ -63,17 +64,18 @@ export async function registerProfileRoute(
 	// HANDLE AVATAR REQUEST
 	app.post("/api/profile/avatar", async (request: FastifyRequest, reply) => {
 		const auth = extractTokenFromRequest(request);
+		console.log("auth: ", auth);
 		if (!auth) {
 			return reply.status(401).send({ error: 'Unauthorized' });
 		}
-		
+
 		const file = await request.file();
 		console.log("file: ", file);
 		if (!file) {
 			reply.status(400).send({ error: "Avatar file is required" });
 			return;
 		}
-		
+
 		const username = auth.username;
 		console.log("username: ", username);
 		if (!username) {
@@ -99,12 +101,12 @@ export async function registerProfileRoute(
 			if (!auth) {
 				return reply.status(401).send({ error: 'Unauthorized' });
 			}
-			
+
 			const { username, newUsername } = request.body as {
 				username: string;
 				newUsername: string;
 			};
-			
+
 			// Use the username from the JWT token for security
 			const currentUsername = auth.username;
 			if (!currentUsername || !newUsername) {
@@ -137,12 +139,12 @@ export async function registerProfileRoute(
 			if (!auth) {
 				return reply.status(401).send({ error: 'Unauthorized' });
 			}
-			
+
 			const { username, newPassword } = request.body as {
 				username: string;
 				newPassword: string;
 			};
-			
+
 			// Use the username from the JWT token for security
 			const currentUsername = auth.username;
 			if (!currentUsername || !newPassword) {
@@ -169,7 +171,7 @@ export async function registerProfileRoute(
 			if (!auth) {
 				return reply.status(401).send({ error: 'Unauthorized' });
 			}
-			
+
 			const username = request.query.username as string;
 			const user = await prisma.user.findUnique({ where: { username } });
 			if (!user) {
@@ -187,6 +189,45 @@ export async function registerProfileRoute(
 				});
 				console.log("Matches : ", matches);
 				reply.status(200).send(matches);
+			}
+		}
+	);
+
+	app.get(
+		"/api/profile/friends",
+		async (
+			request: FastifyRequest<{ Querystring: { username: string } }>,
+			reply
+		) => {
+			const auth = extractTokenFromRequest(request);
+			if (!auth) {
+				return reply.status(401).send({ error: 'Unauthorized' });
+			}
+
+			const username = request.query.username as string;
+			try
+			{
+				const user = await prisma.user.findUnique({
+					where: { username },
+					select: {
+						id: true,
+						friends: {
+							select: {
+								id: true,
+								username: true,
+								avatarUrl: true,
+								gamesPlayed: true,
+							}
+						}
+					}
+				});
+				if (!user)
+					reply.status(404).send({ error: "User not found" });
+				console.log("Friends: ", user?.friends);
+				reply.status(200).send(user?.friends);
+			} catch (error) {
+				console.error("Error fetching friends:", error);
+				reply.status(500).send({ error: "Internal server error" });
 			}
 		}
 	);
@@ -275,14 +316,16 @@ async function updateAvatar(
 		`${fileName}`
 	);
 	console.log("uploadPath: ", uploadPath);
-
-	await pipeline(file, fs.createWriteStream(uploadPath));
+	if (!file.file) {
+		throw new Error("No file stream found");
+	}
+	await pipeline(file.file, fs.createWriteStream(uploadPath));
 	if (fs.existsSync(uploadPath)) {
 		console.log("✅ Fichier sauvegardé avec succès");
 		const stats = fs.statSync(uploadPath);
 		console.log("📁 Taille du fichier:", stats.size, "bytes");
 	}
-	const avatarPath = `/public/avatars/${fileName}`;
+	const avatarPath = `/avatars/${fileName}`;
 	console.log("avatarPath: ", avatarPath);
 
 	await prisma.user.update({

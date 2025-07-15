@@ -71,8 +71,8 @@ const start = async () => {
             port: 3002,
             host: '0.0.0.0'
         });
-        console.log(`🎉 Server is listening on port: 3002`);
-        console.log(`🌐 Access your app at: http://localhost:3002`);
+        console.log(`🎉 Server is listening on port: 3000`);
+        console.log(`🌐 Access your app at: http://localhost:3000`);
     }
     catch (err) {
         console.error("❌ Server startup failed:", err);
