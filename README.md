@@ -1,5 +1,5 @@
 # Transcende_me_if_you_can
-https://github.com/Canybardeloton/Transcende_me_if_you_can
+(og) https://github.com/Canybardeloton/Transcende_me_if_you_can
 
 Ft_transcendence : 155
 
@@ -94,27 +94,7 @@ FROM CHUN NOTES
 ☐ Prometheus + dashboard validation<br/>
 ☐ End-to-end flow test<br/>
 
+---
+- Super Brief for TypeScript : 
+https://hackmd.io/@QBrv51OvRPqs9dJjL2YIig/HyjiAvH8lg
 
-###  Schedule 
-
-| Task                                | Week 1 | Week 2 | Week 3 | Week 4            |
-| ----------------------------------- | ------ | ------ | ------ | ----------------- |
-| Docker & docker-compose setup       | ██████ |        |        |                   |
-| Backend/frontend scaffold           | ██████ |        |        |                   |
-| SQLite setup                        | ██████ |        |        |                   |
-| Pong game engine                    | ██████ |        |        |                   |
-| HTTPS + JWT login + `.env` security | ██████ |        |        |                   |
-| JWT + session-protected routes      |        | ██████ |        |                   |
-| 2FA implementation                  |        | ██████ |        |                   |
-| ModSecurity + OWASP CRS             |        | ██████ |        |                   |
-| Vault deployment + secret migration |        | ██████ |        |                   |
-| ELK stack deployment                |        |        | ██████ |                   |
-| Kibana dashboards                   |        |        | ██████ |                   |
-| Prometheus + exporters deployment   |        |        | ██████ |                   |
-| Grafana dashboards creation         |        |        | ██████ |                   |
-| Microservices refactor              |        |        |        | ██████            |
-| Internal communication setup        |        |        |        | ██████            |
-| Secure service-to-service API       |        |        |        | ██████            |
-| Final integration testing           |        |        |        | ██████            |
-| Documentation & evaluation prep     |        |        |        | ██████            |
-| Bonus tasks (GDPR, dashboards)      |        |        |        | (if time permits) |
